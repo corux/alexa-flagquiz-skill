@@ -1,0 +1,43 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.48973bd3-2c2c-4597-956f-10bb58a6e55e",
+      "was_cloned": false,
+      "merge": {
+        "manifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "arn:aws:lambda:eu-west-1:347839150037:function:alexa-flagquiz-skill-production"
+              }
+            }
+          }
+        }
+      },
+      "resources": {
+        "manifest": {
+          "eTag": "4abae9afd839a1f818d9f77b87e19531"
+        },
+        "interactionModel": {
+          "de-DE": {
+            "eTag": "9a377cfd63441917c5fd347235c64665"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:eu-west-1:347839150037:function:alexa-flagquiz-skill-production",
+            "awsRegion": "eu-west-1",
+            "codeUri": "dist",
+            "functionName": "alexa-flagquiz-skill-production",
+            "handler": "index.handler",
+            "revisionId": "14444caa-d8eb-4da8-96df-22cf9fc99780",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
+    }
+  }
+}
