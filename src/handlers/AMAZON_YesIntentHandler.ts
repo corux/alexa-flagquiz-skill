@@ -1,23 +1,19 @@
 import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
-import { BaseIntentHandler, Intents } from "../utils";
+import { BaseIntentHandler, getLocale, getQuestion, Intents, startQuiz } from "../utils";
+import countries from "../utils/countries";
 
 @Intents("AMAZON.YesIntent")
 export class AmazonYesIntentHandler extends BaseIntentHandler {
   public async handle(handlerInput: HandlerInput): Promise<Response> {
     const attributes = handlerInput.attributesManager.getSessionAttributes() as SessionAttributes;
+    const locale = getLocale(handlerInput);
 
-    if (attributes.status !== "PLAYING") {
-      attributes.status = "PLAYING";
-      return handlerInput.responseBuilder
-        .speak("Hier kommt die erste Flagge. Gehört sie zu Deutschland, Belgien oder Frankreich?")
-        .withShouldEndSession(false)
-        .getResponse();
+    if (attributes.nextRegion) {
+      const region = countries.getRegionByCode(attributes.nextRegion, locale);
+      return startQuiz(handlerInput, region);
     }
 
-    return handlerInput.responseBuilder
-      .speak("Ich habe dich nicht verstanden, bitte versuche es noch einmal.")
-      .withShouldEndSession(false)
-      .getResponse();
+    return getQuestion(handlerInput, false, "Ich habe dich nicht verstanden, bitte versuche es noch einmal.");
   }
 }

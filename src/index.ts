@@ -2,11 +2,14 @@ import { SkillBuilders } from "ask-sdk-core";
 import { DynamoDbPersistenceAdapter } from "ask-sdk-dynamodb-persistence-adapter";
 import {
     AmazonHelpIntentHandler,
+    AmazonNoIntentHandler,
     AmazonStopIntentHandler,
     AmazonYesIntentHandler,
+    CountryIntentHandler,
     CustomErrorHandler,
     InfoIntentHandler,
     LaunchRequestHandler,
+    QuizIntentHandler,
     SessionEndedHandler,
 } from "./handlers";
 import { LogInterceptor } from "./interceptors";
@@ -21,7 +24,10 @@ export const handler = SkillBuilders.custom()
         new AmazonStopIntentHandler(),
         new AmazonHelpIntentHandler(),
         new AmazonYesIntentHandler(),
+        new AmazonNoIntentHandler(),
+        new CountryIntentHandler(),
         new InfoIntentHandler(),
+        new QuizIntentHandler(),
         new LaunchRequestHandler(),
         new SessionEndedHandler(),
     )

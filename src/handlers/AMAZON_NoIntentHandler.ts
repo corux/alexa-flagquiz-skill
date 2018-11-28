@@ -1,10 +1,11 @@
 import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
-import { BaseIntentHandler, Intents } from "../utils";
+import { Intents, RequiresPlayingStatusIntentHandler } from "../utils";
 
-@Intents("AMAZON.CancelIntent", "AMAZON.StopIntent", "AMAZON.PauseIntent")
-export class AmazonStopIntentHandler extends BaseIntentHandler {
+@Intents("AMAZON.NoIntent")
+export class AmazonNoIntentHandler extends RequiresPlayingStatusIntentHandler {
   public handle(handlerInput: HandlerInput): Response {
+    // TODO: quit or handle start quiz during playing mode, ...
     return handlerInput.responseBuilder
       .speak("Bis bald!")
       .withShouldEndSession(true)

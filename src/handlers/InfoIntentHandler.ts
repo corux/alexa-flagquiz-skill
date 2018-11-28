@@ -1,21 +1,26 @@
 import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
-import { BaseIntentHandler, Intents } from "../utils";
+import { BaseIntentHandler, getQuestion, Intents } from "../utils";
 
 @Intents("InfoIntent")
 export class InfoIntentHandler extends BaseIntentHandler {
   public async handle(handlerInput: HandlerInput): Promise<Response> {
-    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const attributes = handlerInput.attributesManager.getSessionAttributes() as SessionAttributes;
     if (attributes.status !== "PLAYING") {
-      const currentRound = attributes.round || 0;
-      const reprompt = `Bist du bereit für die ${currentRound === 0 ? "erste" : "nächste"} Runde?`;
+      const reprompt = `Bist du bereit für die nächste Runde?`;
+      let textVal = "";
+      if (attributes.round > 0) {
+        textVal = `Du hast bereits <say-as interpret-as="number">${attributes.round}</say-as>
+          Runde${attributes.round > 1 ? "n" : ""} gespielt. `;
+      }
       return handlerInput.responseBuilder
-        .speak(reprompt)
+        .speak(`${textVal} ${reprompt}`)
         .reprompt(reprompt)
         .withShouldEndSession(false)
         .getResponse();
     }
-    const correctAnswers = attributes.history.filter((item) => item.correct).length;
+
+    const correctAnswers = attributes.history.filter((item) => item.answer === item.iso).length;
     const totalAnswers = attributes.history.length;
     let text;
     if (correctAnswers === totalAnswers) {
@@ -25,8 +30,7 @@ export class InfoIntentHandler extends BaseIntentHandler {
     } else if (totalAnswers === 0) {
       text = "Du hast noch keine Fragen beantwortet";
     }
-    return handlerInput.responseBuilder
-      .speak(text)
-      .getResponse();
+
+    return getQuestion(handlerInput, false, text);
   }
 }

@@ -59,6 +59,34 @@
             "wieviele noch",
             "wie ist der Spielstand"
           ]
+        },
+        {
+          "name": "CountryIntent",
+          "samples": [
+            "die {country}",
+            "zu {country}",
+            "{country}"
+          ],
+          "slots": [
+            {
+              "name": "country",
+              "type": "COUNTRY"
+            }
+          ]
+        },
+        {
+          "name": "QuizIntent",
+          "samples": [
+            "starte das Quiz",
+            "starte das Quiz mit Ländern aus {region}",
+            "mit Ländern aus {region}"
+          ],
+          "slots": [
+            {
+              "name": "region",
+              "type": "CONTINENT"
+            }
+          ]
         }
       ],
       "types": [
