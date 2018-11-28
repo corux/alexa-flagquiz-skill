@@ -1,5 +1,12 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
+import { StateManagement } from "./StateManagement";
+
+export function Fallback() {
+  return <T extends BaseIntentHandler>(target: new () => T) => {
+    target.prototype.isFallback = true;
+  };
+}
 
 export function Intents(...intents: string[]) {
   return <T extends BaseIntentHandler>(target: new () => T) => {
@@ -13,11 +20,16 @@ export function Request(...types: string[]) {
   };
 }
 
-export abstract class BaseIntentHandler implements RequestHandler {
+export abstract class BaseIntentHandler extends StateManagement implements RequestHandler {
   private readonly types: string[];
   private readonly intents: string[];
+  private readonly isFallback: boolean;
 
   public canHandle(handlerInput: HandlerInput): boolean {
+    if (this.isFallback) {
+      return true;
+    }
+
     const request = handlerInput.requestEnvelope.request;
 
     if (this.intents && request.type === "IntentRequest") {

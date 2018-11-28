@@ -1,8 +1,10 @@
 import { IRegion } from "@corux/country-data";
 import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
+import { IPersistentAttributes, ISessionAttributes } from "./attributes";
 import countries from "./countries";
 import { getLocale } from "./request";
+import { States } from "./State";
 
 function createQuestions(handlerInput: HandlerInput, region?: IRegion) {
   const locale = getLocale(handlerInput);
@@ -32,12 +34,12 @@ export function getQuestion(handlerInput: HandlerInput,
                             isRepromptAfterIntentChange: boolean,
                             textPrefix?: string): Response {
   const locale = getLocale(handlerInput);
-  const attributes = handlerInput.attributesManager.getSessionAttributes() as SessionAttributes;
+  const attributes = handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
   const current = attributes.history.filter((item) => !item.answer)[0];
   const choices = current.choices.map((item) => countries.getByIso3(item, locale).name);
 
   const reprompt = `Gehört sie zu ${choices.slice(0, -1)} oder ${choices[choices.length - 1]}?`;
-  let text = `${textPrefix} ` || "";
+  let text = `${textPrefix || ""} `;
   if (isRepromptAfterIntentChange) {
     const isFirstQuestion = attributes.history.filter((item) => item.answer).length === 0;
     const isLastQuestion = attributes.history.filter((item) => !item.answer).length === 1;
@@ -49,16 +51,14 @@ export function getQuestion(handlerInput: HandlerInput,
   return handlerInput.responseBuilder
     .speak(text)
     .reprompt(reprompt)
-    .withShouldEndSession(false)
     .getResponse();
 }
 
 export function startQuiz(handlerInput: HandlerInput, region?: IRegion): Response {
-  const attributes = handlerInput.attributesManager.getSessionAttributes() as SessionAttributes;
+  const attributes = handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
 
-  attributes.status = "PLAYING";
+  attributes.state = States.QuizInProgress;
   attributes.region = region ? region.code : undefined;
-  attributes.nextRegion = undefined;
   attributes.history = createQuestions(handlerInput, region);
 
   let text = "Das Quiz wird gestartet.";
@@ -70,14 +70,15 @@ export function startQuiz(handlerInput: HandlerInput, region?: IRegion): Respons
 }
 
 export async function initializeSession(handlerInput: HandlerInput): Promise<void> {
-  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes() as SessionAttributes;
+  const sessionAttributes = handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
 
   if (handlerInput.requestEnvelope.session.new) {
     sessionAttributes.round = 0;
-    sessionAttributes.status = "STOPPED";
+    sessionAttributes.stateData = {};
 
-    const attributes = await handlerInput.attributesManager.getPersistentAttributes() as PersistentAttributes;
+    const attributes = await handlerInput.attributesManager.getPersistentAttributes() as IPersistentAttributes;
     attributes.lastAccess = new Date().getTime();
+    attributes.scores = attributes.scores || [];
     handlerInput.attributesManager.savePersistentAttributes();
   }
 }

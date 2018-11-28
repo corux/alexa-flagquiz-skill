@@ -1,15 +1,20 @@
 import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
-import { BaseIntentHandler, initializeSession, Request } from "../utils";
+import {
+  BaseIntentHandler,
+  initializeSession,
+  IPersistentAttributes,
+  ISessionAttributes,
+  Request,
+} from "../../../utils";
 
 @Request("LaunchRequest")
 export class LaunchRequestHandler extends BaseIntentHandler {
   public async handle(handlerInput: HandlerInput): Promise<Response> {
-    const responseBuilder = handlerInput.responseBuilder;
     initializeSession(handlerInput);
 
     let text;
-    const attributes = await handlerInput.attributesManager.getPersistentAttributes() as PersistentAttributes;
+    const attributes = await handlerInput.attributesManager.getPersistentAttributes() as IPersistentAttributes;
     const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
     if (!attributes.lastAccess || attributes.lastAccess < new Date().getTime() - oneWeekMs) {
       text = `Willkommen beim Flaggen Quiz!
@@ -26,10 +31,10 @@ export class LaunchRequestHandler extends BaseIntentHandler {
     const reprompt = "Bist du bereit für die erste Runde?";
     text += reprompt;
 
-    const sessionAttributes = await handlerInput.attributesManager.getSessionAttributes() as SessionAttributes;
+    const sessionAttributes = await handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
     sessionAttributes.nextRegion = sessionAttributes.region || "ALL";
 
-    return responseBuilder
+    return handlerInput.responseBuilder
       .speak(text)
       .reprompt(reprompt)
       .withShouldEndSession(false)

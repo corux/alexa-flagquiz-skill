@@ -2,17 +2,17 @@ import { SkillBuilders } from "ask-sdk-core";
 import { DynamoDbPersistenceAdapter } from "ask-sdk-dynamodb-persistence-adapter";
 import {
     AmazonHelpIntentHandler,
-    AmazonNoIntentHandler,
     AmazonStopIntentHandler,
-    AmazonYesIntentHandler,
-    CountryIntentHandler,
     CustomErrorHandler,
-    InfoIntentHandler,
-    LaunchRequestHandler,
-    QuizIntentHandler,
     SessionEndedHandler,
 } from "./handlers";
 import { LogInterceptor } from "./interceptors";
+import {
+    QuizFinishedStateHandler,
+    QuizInProgressStateHandler,
+    SessionStartedStateHandler,
+} from "./states";
+import { } from "./states/QuizFinished";
 
 const dynamodbAdapter = new DynamoDbPersistenceAdapter({
     createTable: true,
@@ -22,14 +22,11 @@ const dynamodbAdapter = new DynamoDbPersistenceAdapter({
 export const handler = SkillBuilders.custom()
     .addRequestHandlers(
         new AmazonStopIntentHandler(),
-        new AmazonHelpIntentHandler(),
-        new AmazonYesIntentHandler(),
-        new AmazonNoIntentHandler(),
-        new CountryIntentHandler(),
-        new InfoIntentHandler(),
-        new QuizIntentHandler(),
-        new LaunchRequestHandler(),
         new SessionEndedHandler(),
+        new AmazonHelpIntentHandler(),
+        new SessionStartedStateHandler(),
+        new QuizInProgressStateHandler(),
+        new QuizFinishedStateHandler(),
     )
     .addErrorHandlers(
         new CustomErrorHandler(),
