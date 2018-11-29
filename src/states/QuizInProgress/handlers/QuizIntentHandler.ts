@@ -1,6 +1,6 @@
 import { HandlerInput } from "ask-sdk-core";
 import { IntentRequest, Response } from "ask-sdk-model";
-import { BaseIntentHandler, getLocale, getSlotValue, Intents, startQuiz } from "../../../utils";
+import { BaseIntentHandler, getLocale, getNumberOfQuestions, getSlotValue, Intents } from "../../../utils";
 import countries from "../../../utils/countries";
 
 @Intents("QuizIntent")
@@ -25,7 +25,7 @@ export class QuizIntentHandler extends BaseIntentHandler {
     const region = countries.getRegionByCode(regionValue, locale);
     if (region) {
       const numCountries = countries.getAll(locale).filter((item) => item.region === region.code);
-      if (numCountries.length >= 10) {
+      if (numCountries.length >= getNumberOfQuestions()) {
         return region;
       }
     }

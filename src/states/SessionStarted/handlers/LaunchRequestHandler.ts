@@ -2,6 +2,7 @@ import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
 import {
   BaseIntentHandler,
+  getNumberOfQuestions,
   initializeSession,
   IPersistentAttributes,
   ISessionAttributes,
@@ -18,7 +19,7 @@ export class LaunchRequestHandler extends BaseIntentHandler {
     const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
     if (!attributes.lastAccess || attributes.lastAccess < new Date().getTime() - oneWeekMs) {
       text = `Willkommen beim Flaggen Quiz!
-        Ich zeige dir 10 Flaggen und du musst sie den richtigen Ländern zuordnen.
+        Ich zeige dir ${getNumberOfQuestions()} Flaggen und du musst sie den richtigen Ländern zuordnen.
         Versuche möglichst viele richtige Antworten zu erzielen um auf die Highscore Liste zu gelangen. `;
       if (!handlerInput.requestEnvelope.context.Display) {
         text += `Dieser Skill funktioniert am besten auf dem Echo Show, Echo Spot oder dem Fire TV.

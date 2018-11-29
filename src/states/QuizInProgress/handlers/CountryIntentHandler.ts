@@ -41,11 +41,11 @@ export class CountryIntentHandler extends BaseIntentHandler {
         attributes.round++;
 
         const reprompt = "Möchtest du nochmal spielen?";
-        const correctAnswersText = correctAnswers === 0 ? "keine der" :
-          correctAnswers === 1 ? "eine von" :
-            `<say-as interpret-as="number">${correctAnswers}</say-as>`;
-        let text = `${successText} Du hast ${correctAnswersText}
-          <say-as interpret-as="number">${totalAnswers}</say-as> Flaggen erkannt. `;
+        let correctAnswersText = `<say-as interpret-as="number">${correctAnswers}</say-as> von ${totalAnswers}`;
+        if (correctAnswers === 0) { correctAnswersText = `keine der ${totalAnswers}`; }
+        if (correctAnswers === 1) { correctAnswersText = `eine von ${totalAnswers}`; }
+        if (correctAnswers === totalAnswers) { correctAnswersText = `alle ${totalAnswers}`; }
+        let text = `${successText} Du hast ${correctAnswersText} Flaggen erkannt. `;
         text += reprompt;
         return handlerInput.responseBuilder
           .speak(text)

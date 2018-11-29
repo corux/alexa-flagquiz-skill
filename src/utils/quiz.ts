@@ -6,18 +6,26 @@ import countries from "./countries";
 import { getLocale } from "./request";
 import { States } from "./State";
 
+export function getNumberOfQuestions(): number {
+  return 3;
+}
+
+export function getNumberOfChoices(): number {
+  return 3;
+}
+
 function createQuestions(handlerInput: HandlerInput, region?: IRegion) {
   const locale = getLocale(handlerInput);
-  let all = countries.getAll(locale);
+  let all = countries.getAll(locale).filter((item) => item.flag && item.flag.smallImageUrl && item.flag.largeImageUrl);
   if (region) {
     all = all.filter((item) => item.region === region.code);
   }
 
   all.sort(() => Math.random() - 0.5);
-  const selected = all.slice(0, 3);
+  const selected = all.slice(0, getNumberOfQuestions());
   return selected.map((item) => {
     const choices = [item];
-    while (choices.length < 3) {
+    while (choices.length < getNumberOfChoices()) {
       const nextChoice = all[Math.floor(Math.random() * 1000) % all.length];
       if (choices.indexOf(nextChoice) === -1) {
         choices.push(nextChoice);
@@ -36,9 +44,10 @@ export function getQuestion(handlerInput: HandlerInput,
   const locale = getLocale(handlerInput);
   const attributes = handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
   const current = attributes.history.filter((item) => !item.answer)[0];
-  const choices = current.choices.map((item) => countries.getByIso3(item, locale).name);
+  const choices = current.choices.map((item) => countries.getByIso3(item, locale));
 
-  const reprompt = `Gehört sie zu ${choices.slice(0, -1)} oder ${choices[choices.length - 1]}?`;
+  const reprompt = `Gehört sie zu ${choices.slice(0, -1).map((item) => item.name)}
+    oder ${choices[choices.length - 1].name}?`;
   let text = `${textPrefix || ""} `;
   if (isRepromptAfterIntentChange) {
     const isFirstQuestion = attributes.history.filter((item) => item.answer).length === 0;
@@ -48,10 +57,24 @@ export function getQuestion(handlerInput: HandlerInput,
   }
   text += reprompt;
 
-  return handlerInput.responseBuilder
+  let response = handlerInput.responseBuilder
     .speak(text)
-    .reprompt(reprompt)
-    .getResponse();
+    .reprompt(reprompt);
+
+  const country = countries.getByIso3(current.iso, locale);
+
+  const hasDisplay = handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display;
+  if (hasDisplay) {
+    response = response;
+  } else {
+    const choicesText = choices.map((item) => item.name);
+    const cardContent = `${choicesText.slice(0, -1).join(", ")} oder ${choicesText[choicesText.length - 1]}?`;
+    response = response
+      .withStandardCard("Zu welchem Land gehört die Flagge?", cardContent,
+        country.flag.smallImageUrl, country.flag.largeImageUrl);
+  }
+
+  return response.getResponse();
 }
 
 export function startQuiz(handlerInput: HandlerInput, region?: IRegion): Response {

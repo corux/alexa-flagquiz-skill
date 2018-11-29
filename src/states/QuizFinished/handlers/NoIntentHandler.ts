@@ -6,7 +6,7 @@ import { BaseIntentHandler, Intents } from "../../../utils";
 export class NoIntentHandler extends BaseIntentHandler {
   public handle(handlerInput: HandlerInput): Response {
     return handlerInput.responseBuilder
-      .speak("Bis zum nächsten Mal.")
+      .speak("Danke fürs spielen! Bis zum nächsten mal!")
       .getResponse();
   }
 }

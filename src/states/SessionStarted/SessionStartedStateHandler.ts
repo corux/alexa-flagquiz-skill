@@ -6,6 +6,7 @@ import {
   NoIntentHandler,
   YesIntentHandler,
 } from "./handlers";
+import { QuizIntentHandler } from "./handlers/QuizIntentHandler";
 
 @State(States.SessionStarted)
 export class SessionStartedStateHandler extends StateHandler {
@@ -23,6 +24,7 @@ export class SessionStartedStateHandler extends StateHandler {
       new NoIntentHandler(),
       new YesIntentHandler(),
       new LaunchRequestHandler(),
+      new QuizIntentHandler(),
       new FallbackHandler(),
     ];
   }
