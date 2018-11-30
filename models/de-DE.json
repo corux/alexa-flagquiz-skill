@@ -79,6 +79,7 @@
           "samples": [
             "starte das Quiz",
             "starte das Quiz mit Ländern aus {region}",
+            "nach dem Quiz mit Ländern aus {region}",
             "mit Ländern aus {region}"
           ],
           "slots": [
