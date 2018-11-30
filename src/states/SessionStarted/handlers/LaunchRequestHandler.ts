@@ -2,6 +2,7 @@ import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
 import {
   BaseIntentHandler,
+  createResponseWithBackground,
   getNumberOfQuestions,
   initializeSession,
   IPersistentAttributes,
@@ -35,10 +36,9 @@ export class LaunchRequestHandler extends BaseIntentHandler {
     const sessionAttributes = await handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
     sessionAttributes.nextRegion = sessionAttributes.region || "ALL";
 
-    return handlerInput.responseBuilder
+    return createResponseWithBackground(handlerInput)
       .speak(text)
       .reprompt(reprompt)
-      .withShouldEndSession(false)
       .getResponse();
   }
 }

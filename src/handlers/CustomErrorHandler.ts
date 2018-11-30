@@ -11,7 +11,6 @@ export class CustomErrorHandler implements ErrorHandler {
 
     return handlerInput.responseBuilder
       .speak("Ich habe Schwierigkeiten auf den Skill zuzugreifen. Bitte starte den Skill erneut.")
-      .withShouldEndSession(true)
       .getResponse();
   }
 }

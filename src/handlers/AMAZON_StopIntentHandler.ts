@@ -7,7 +7,6 @@ export class AmazonStopIntentHandler extends BaseIntentHandler {
   public handle(handlerInput: HandlerInput): Response {
     return handlerInput.responseBuilder
       .speak("Bis bald!")
-      .withShouldEndSession(true)
       .getResponse();
   }
 }

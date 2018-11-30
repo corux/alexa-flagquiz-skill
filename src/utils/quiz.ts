@@ -1,6 +1,6 @@
 import { IRegion } from "@corux/country-data";
 import { HandlerInput } from "ask-sdk-core";
-import { Response } from "ask-sdk-model";
+import { interfaces, Response } from "ask-sdk-model";
 import { IPersistentAttributes, ISessionAttributes } from "./attributes";
 import countries from "./countries";
 import { getLocale } from "./request";
@@ -65,7 +65,32 @@ export function getQuestion(handlerInput: HandlerInput,
 
   const hasDisplay = handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display;
   if (hasDisplay) {
-    response = response;
+    const items: interfaces.display.ListItem[] = choices.map((item) => ({
+      textContent: {
+        primaryText: {
+          text: item.name,
+          type: "PlainText",
+        } as interfaces.display.PlainText,
+      },
+      token: item.iso3,
+    }));
+    response = response
+      .addRenderTemplateDirective({
+        backgroundImage: {
+          sources: [
+            {
+              url: country.flag.largeImageUrl,
+              widthPixels: 1200,
+            },
+            {
+              url: country.flag.smallImageUrl,
+              widthPixels: 720,
+            },
+          ],
+        },
+        listItems: items,
+        type: "ListTemplate1",
+      });
   } else {
     const choicesText = choices.map((item) => item.name);
     const cardContent = `${choicesText.slice(0, -1).join(", ")} oder ${choicesText[choicesText.length - 1]}?`;

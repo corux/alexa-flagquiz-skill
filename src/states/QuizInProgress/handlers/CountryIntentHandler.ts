@@ -1,12 +1,14 @@
 import { HandlerInput } from "ask-sdk-core";
-import { IntentRequest, Response } from "ask-sdk-model";
+import { Response } from "ask-sdk-model";
 import {
-  BaseIntentHandler, getLocale, getQuestion, getSlotValue,
-  Intents, IPersistentAttributes, ISessionAttributes, States,
+  BaseIntentHandler, createResponseWithBackground, getLocale, getQuestion,
+  getSlotValue, Intents, IPersistentAttributes, ISessionAttributes, Request,
+  States,
 } from "../../../utils";
 import countries from "../../../utils/countries";
 
 @Intents("CountryIntent")
+@Request("Display.ElementSelected")
 export class CountryIntentHandler extends BaseIntentHandler {
   public async handle(handlerInput: HandlerInput): Promise<Response> {
     const attributesManager = handlerInput.attributesManager;
@@ -14,7 +16,12 @@ export class CountryIntentHandler extends BaseIntentHandler {
     const current = attributes.history.filter((item) => !item.answer)[0];
     const locale = getLocale(handlerInput);
 
-    const slotValue = getSlotValue((handlerInput.requestEnvelope.request as IntentRequest).intent.slots.country);
+    let slotValue;
+    if (handlerInput.requestEnvelope.request.type === "IntentRequest") {
+      slotValue = getSlotValue(handlerInput.requestEnvelope.request.intent.slots.country);
+    } else if (handlerInput.requestEnvelope.request.type === "Display.ElementSelected") {
+      slotValue = handlerInput.requestEnvelope.request.token;
+    }
     if (!slotValue) {
       const reprompt = "Bitte versuche es noch einmal.";
       return handlerInput.responseBuilder
@@ -47,10 +54,9 @@ export class CountryIntentHandler extends BaseIntentHandler {
         if (correctAnswers === totalAnswers) { correctAnswersText = `alle ${totalAnswers}`; }
         let text = `${successText} Du hast ${correctAnswersText} Flaggen erkannt. `;
         text += reprompt;
-        return handlerInput.responseBuilder
+        return createResponseWithBackground(handlerInput)
           .speak(text)
           .reprompt(reprompt)
-          .withShouldEndSession(false)
           .getResponse();
       }
 
