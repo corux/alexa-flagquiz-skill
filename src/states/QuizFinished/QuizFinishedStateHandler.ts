@@ -1,5 +1,5 @@
 import { RequestHandler } from "ask-sdk-core";
-import { InfoIntentHandler } from "../../handlers";
+import { AmazonHelpIntentHandler, InfoIntentHandler } from "../../handlers";
 import { State, StateHandler, States } from "../../utils";
 import {
   FallbackHandler,
@@ -16,6 +16,7 @@ export class QuizFinishedStateHandler extends StateHandler {
       new YesIntentHandler(),
       new QuizIntentHandler(),
       new InfoIntentHandler(),
+      new AmazonHelpIntentHandler(),
       new FallbackHandler(),
     ];
   }

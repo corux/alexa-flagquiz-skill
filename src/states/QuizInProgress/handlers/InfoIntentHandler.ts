@@ -2,7 +2,7 @@ import { HandlerInput } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
 import { BaseIntentHandler, getQuestion, Intents, ISessionAttributes } from "../../../utils";
 
-@Intents("InfoIntent")
+@Intents("InfoIntent", "AMAZON.HelpIntent")
 export class InfoIntentHandler extends BaseIntentHandler {
   public async handle(handlerInput: HandlerInput): Promise<Response> {
     const attributes = handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;

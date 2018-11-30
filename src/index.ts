@@ -23,7 +23,6 @@ export const handler = SkillBuilders.custom()
     .addRequestHandlers(
         new AmazonStopIntentHandler(),
         new SessionEndedHandler(),
-        new AmazonHelpIntentHandler(),
         new SessionStartedStateHandler(),
         new QuizInProgressStateHandler(),
         new QuizFinishedStateHandler(),
