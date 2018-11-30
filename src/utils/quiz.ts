@@ -7,7 +7,7 @@ import { getLocale } from "./request";
 import { States } from "./State";
 
 export function getNumberOfQuestions(): number {
-  return 3;
+  return 8;
 }
 
 export function getNumberOfChoices(): number {
