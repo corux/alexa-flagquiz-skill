@@ -61,42 +61,44 @@ export function getQuestion(handlerInput: HandlerInput,
     .speak(text)
     .reprompt(reprompt);
 
-  const country = countries.getByIso3(current.iso, locale);
+  if (isRepromptAfterIntentChange) {
+    const country = countries.getByIso3(current.iso, locale);
 
-  const hasDisplay = handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display;
-  if (hasDisplay) {
-    const items: interfaces.display.ListItem[] = choices.map((item) => ({
-      textContent: {
-        primaryText: {
-          text: item.name,
-          type: "PlainText",
-        } as interfaces.display.PlainText,
-      },
-      token: item.iso3,
-    }));
-    response = response
-      .addRenderTemplateDirective({
-        backgroundImage: {
-          sources: [
-            {
-              url: country.flag.largeImageUrl,
-              widthPixels: 1200,
-            },
-            {
-              url: country.flag.smallImageUrl,
-              widthPixels: 720,
-            },
-          ],
+    const hasDisplay = handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display;
+    if (hasDisplay) {
+      const items: interfaces.display.ListItem[] = choices.map((item) => ({
+        textContent: {
+          primaryText: {
+            text: item.name,
+            type: "PlainText",
+          } as interfaces.display.PlainText,
         },
-        listItems: items,
-        type: "ListTemplate1",
-      });
-  } else {
-    const choicesText = choices.map((item) => item.name);
-    const cardContent = `${choicesText.slice(0, -1).join(", ")} oder ${choicesText[choicesText.length - 1]}?`;
-    response = response
-      .withStandardCard("Zu welchem Land gehört die Flagge?", cardContent,
-        country.flag.smallImageUrl, country.flag.largeImageUrl);
+        token: item.iso3,
+      }));
+      response = response
+        .addRenderTemplateDirective({
+          backgroundImage: {
+            sources: [
+              {
+                url: country.flag.largeImageUrl,
+                widthPixels: 1200,
+              },
+              {
+                url: country.flag.smallImageUrl,
+                widthPixels: 720,
+              },
+            ],
+          },
+          listItems: items,
+          type: "ListTemplate1",
+        });
+    } else {
+      const choicesText = choices.map((item) => item.name);
+      const cardContent = `${choicesText.slice(0, -1).join(", ")} oder ${choicesText[choicesText.length - 1]}?`;
+      response = response
+        .withStandardCard("Zu welchem Land gehört die Flagge?", cardContent,
+          country.flag.smallImageUrl, country.flag.largeImageUrl);
+    }
   }
 
   return response.getResponse();

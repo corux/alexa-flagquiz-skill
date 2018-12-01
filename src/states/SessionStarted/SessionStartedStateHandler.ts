@@ -22,10 +22,10 @@ export class SessionStartedStateHandler extends StateHandler {
 
   public get handlers(): RequestHandler[] {
     return [
-      new NoIntentHandler(),
-      new YesIntentHandler(),
-      new LaunchRequestHandler(),
       new QuizIntentHandler(),
+      new LaunchRequestHandler(),
+      new YesIntentHandler(),
+      new NoIntentHandler(),
       new AmazonHelpIntentHandler(),
       new FallbackHandler(),
     ];

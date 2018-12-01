@@ -1,8 +1,9 @@
 import { RequestHandler } from "ask-sdk-core";
-import { AmazonHelpIntentHandler, InfoIntentHandler } from "../../handlers";
+import { AmazonHelpIntentHandler } from "../../handlers";
 import { State, StateHandler, States } from "../../utils";
 import {
   FallbackHandler,
+  InfoIntentHandler,
   NoIntentHandler,
   QuizIntentHandler,
   YesIntentHandler,

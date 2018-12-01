@@ -7,6 +7,7 @@ export class NoIntentHandler extends BaseIntentHandler {
   public handle(handlerInput: HandlerInput): Response {
     return handlerInput.responseBuilder
       .speak("Danke fürs spielen! Bis zum nächsten mal!")
+      .withShouldEndSession(true)
       .getResponse();
   }
 }

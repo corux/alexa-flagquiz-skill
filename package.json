@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "build": "webpack --config webpack.config.ts --require ts-node/register",
     "build:dev": "npm run build -- --mode development --watch",
-    "build:prod": "npm run lint && npm run build -- --mode development",
+    "build:prod": "npm run lint && npm run build -- --mode production",
     "deploy:prod": "ask deploy --force --profile default --target lambda",
     "update-schema": "ts-node ./bin/update-schema.ts --lang de --file ./models/de-DE.json",
     "convert-assets": "rsvg-convert -w 108 -o assets/icon108.png assets/icon.svg && rsvg-convert -w 512 -o assets/icon512.png assets/icon.svg",

@@ -12,6 +12,11 @@ import {
 
 @Request("LaunchRequest")
 export class LaunchRequestHandler extends BaseIntentHandler {
+  public canHandle(handlerInput: HandlerInput): boolean {
+    const session = handlerInput.requestEnvelope.session;
+    return super.canHandle(handlerInput) || (session && session.new);
+  }
+
   public async handle(handlerInput: HandlerInput): Promise<Response> {
     initializeSession(handlerInput);
 
@@ -21,7 +26,7 @@ export class LaunchRequestHandler extends BaseIntentHandler {
     if (!attributes.lastAccess || attributes.lastAccess < new Date().getTime() - oneWeekMs) {
       text = `Willkommen beim Flaggen Quiz!
         Ich zeige dir ${getNumberOfQuestions()} Flaggen und du musst sie den richtigen Ländern zuordnen.
-        Versuche möglichst viele richtige Antworten zu erzielen um auf die Highscore Liste zu gelangen. `;
+        Versuche möglichst viele richtige Antworten zu erzielen. `;
       if (!handlerInput.requestEnvelope.context.Display) {
         text += `Dieser Skill funktioniert am besten auf dem Echo Show, Echo Spot oder dem Fire TV.
             Wenn du dennoch fortfährst, kannst du die Flaggen in der Alexa App sehen. `;
