@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "flaggen quiz",
+      "invocationName": "flaggenquiz",
       "intents": [
         {
           "name": "AMAZON.HelpIntent"

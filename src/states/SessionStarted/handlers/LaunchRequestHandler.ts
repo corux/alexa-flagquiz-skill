@@ -24,7 +24,7 @@ export class LaunchRequestHandler extends BaseIntentHandler {
     const attributes = await handlerInput.attributesManager.getPersistentAttributes() as IPersistentAttributes;
     const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
     if (!attributes.lastAccess || attributes.lastAccess < new Date().getTime() - oneWeekMs) {
-      text = `Willkommen beim Flaggen Quiz!
+      text = `Willkommen beim Flaggenquiz!
         Ich zeige dir ${getNumberOfQuestions()} Flaggen und du musst sie den richtigen Ländern zuordnen.
         Versuche möglichst viele richtige Antworten zu erzielen. `;
       if (!handlerInput.requestEnvelope.context.Display) {
@@ -32,7 +32,7 @@ export class LaunchRequestHandler extends BaseIntentHandler {
             Wenn du dennoch fortfährst, kannst du die Flaggen in der Alexa App sehen. `;
       }
     } else {
-      text = "Willkommen zurück beim Flaggen Quiz! ";
+      text = "Willkommen zurück beim Flaggenquiz! ";
     }
 
     const reprompt = "Bist du bereit für die erste Runde?";

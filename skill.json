@@ -5,11 +5,11 @@
         "de-DE": {
           "summary": "Teste dein Wissen über Nationalflaggen.",
           "examplePhrases": [
-            "Alexa, starte Flaggen Quiz",
-            "Alexa, frage Flaggen Quiz nach dem Quiz mit Ländern aus Europa"
+            "Alexa, starte Flaggenquiz",
+            "Alexa, frage Flaggenquiz nach dem Quiz mit Ländern aus Europa"
           ],
-          "name": "Flaggen Quiz",
-          "description": "Mit dem Flaggen Quiz kannst du dein Wissen über die Flaggen aller Länder testen. Es werden dir pro Runde 8 Flaggen gezeigt und du musst sie den richtigen Ländern zuordnen. Die Flaggen siehst du direkt auf deinem Echo Show, Echo Spot oder Fire TV. Auf Alexa-fähigen Geräten ohne Bildschirm werden die Flaggen in der Alexa App angezeigt.",
+          "name": "Flaggenquiz",
+          "description": "Mit dem Flaggenquiz kannst du dein Wissen über die Flaggen aller Länder testen. Es werden dir pro Runde 8 Flaggen gezeigt und du musst sie den richtigen Ländern zuordnen. Die Flaggen siehst du direkt auf deinem Echo Show, Echo Spot oder Fire TV. Auf Alexa-fähigen Geräten ohne Bildschirm werden die Flaggen in der Alexa App angezeigt.",
           "keywords": [
             "Länder",
             "Flaggen",

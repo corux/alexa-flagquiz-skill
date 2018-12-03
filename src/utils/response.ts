@@ -19,7 +19,7 @@ export function createResponseWithBackground(handlerInput: HandlerInput) {
             },
           ],
         },
-        title: "Flaggen Quiz",
+        title: "Flaggenquiz",
         type: "BodyTemplate7",
       });
   }
