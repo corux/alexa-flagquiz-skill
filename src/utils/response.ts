@@ -5,13 +5,6 @@ export function createResponseWithBackground(handlerInput: HandlerInput) {
   if (hasDisplay) {
     return handlerInput.responseBuilder
       .addRenderTemplateDirective({
-        backgroundImage: {
-          sources: [
-            {
-              url: "https://s3-eu-west-1.amazonaws.com/alexa-flagquiz-skill/background.jpg",
-            },
-          ],
-        },
         image: {
           sources: [
             {
