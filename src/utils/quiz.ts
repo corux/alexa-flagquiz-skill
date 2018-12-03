@@ -63,21 +63,14 @@ export function getQuestion(handlerInput: HandlerInput,
 
   if (isRepromptAfterIntentChange) {
     const country = countries.getByIso3(current.iso, locale);
+    const choicesText = choices.map((item) => item.name);
+    const cardContent = `${choicesText.slice(0, -1).join(", ")} oder ${choicesText[choicesText.length - 1]}?`;
 
     const hasDisplay = handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display;
     if (hasDisplay) {
-      const items: interfaces.display.ListItem[] = choices.map((item) => ({
-        textContent: {
-          primaryText: {
-            text: item.name,
-            type: "PlainText",
-          } as interfaces.display.PlainText,
-        },
-        token: item.iso3,
-      }));
       response = response
         .addRenderTemplateDirective({
-          backgroundImage: {
+          image: {
             sources: [
               {
                 url: country.flag.largeImageUrl,
@@ -89,12 +82,10 @@ export function getQuestion(handlerInput: HandlerInput,
               },
             ],
           },
-          listItems: items,
-          type: "ListTemplate1",
+          title: cardContent,
+          type: "BodyTemplate7",
         });
     } else {
-      const choicesText = choices.map((item) => item.name);
-      const cardContent = `${choicesText.slice(0, -1).join(", ")} oder ${choicesText[choicesText.length - 1]}?`;
       response = response
         .withStandardCard("Zu welchem Land gehört die Flagge?", cardContent,
           country.flag.smallImageUrl, country.flag.largeImageUrl);
