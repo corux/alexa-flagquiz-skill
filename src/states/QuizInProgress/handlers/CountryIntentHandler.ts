@@ -17,7 +17,8 @@ export class CountryIntentHandler extends BaseIntentHandler {
     const locale = getLocale(handlerInput);
 
     let slotValue;
-    if (handlerInput.requestEnvelope.request.type === "IntentRequest") {
+    if (handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.slots) {
       slotValue = getSlotValue(handlerInput.requestEnvelope.request.intent.slots.country);
     } else if (handlerInput.requestEnvelope.request.type === "Display.ElementSelected") {
       slotValue = handlerInput.requestEnvelope.request.token;
@@ -65,14 +66,19 @@ export class CountryIntentHandler extends BaseIntentHandler {
 
     current.answer = slotValue;
     if (current.iso === current.answer) {
-      return getResponse([
-        "Das war richtig!",
-        "Super! Das war richtig!",
-        "Richtig!",
-      ].sort(() => Math.random() - 0.5)[0]);
+      const speechcon = this.getRandomEntry([
+        "richtig", "bingo", "bravo",
+        "prima", "stimmt", "super",
+        "yay", "jawohl",
+      ]);
+      return getResponse(`<say-as interpret-as='interjection'>${speechcon}</say-as>!`);
     }
 
     const answer = countries.getByIso3(current.iso, locale).name;
     return getResponse(`Die richtige Antwort war ${answer}.`);
+  }
+
+  private getRandomEntry(array: string[]): string {
+    return array[Math.floor(Math.random() * array.length)];
   }
 }
