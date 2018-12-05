@@ -46,7 +46,7 @@ export function getQuestion(handlerInput: HandlerInput,
   const current = attributes.history.filter((item) => !item.answer)[0];
   const choices = current.choices.map((item) => countries.getByIso3(item, locale));
 
-  const reprompt = `Gehört sie zu ${choices.slice(0, -1).map((item) => item.name)}
+  const reprompt = `Gehört sie zu ${choices.slice(0, -1).map((item) => item.name).join(", ")}
     oder ${choices[choices.length - 1].name}?`;
   let text = `${textPrefix || ""} `;
   if (isRepromptAfterIntentChange) {
