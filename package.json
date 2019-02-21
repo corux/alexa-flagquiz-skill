@@ -21,7 +21,7 @@
     "@corux/country-data": "1.0.2",
     "@types/node": "10.12.26",
     "ask-cli": "1.6.2",
-    "ask-sdk-core": "2.3.0",
+    "ask-sdk-core": "2.4.0",
     "ask-sdk-dynamodb-persistence-adapter": "2.3.0",
     "ask-sdk-model": "1.11.2",
     "aws-sdk": "2.407.0",
