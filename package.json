@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@corux/country-data": "1.0.2",
-    "@types/node": "10.12.29",
+    "@types/node": "10.12.30",
     "ask-cli": "1.6.2",
     "ask-sdk-core": "2.4.0",
     "ask-sdk-dynamodb-persistence-adapter": "2.4.0",
