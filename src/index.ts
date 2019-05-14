@@ -1,7 +1,6 @@
 import { SkillBuilders } from "ask-sdk-core";
 import { DynamoDbPersistenceAdapter } from "ask-sdk-dynamodb-persistence-adapter";
 import {
-    AmazonHelpIntentHandler,
     AmazonStopIntentHandler,
     CustomErrorHandler,
     SessionEndedHandler,

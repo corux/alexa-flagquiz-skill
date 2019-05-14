@@ -24,7 +24,7 @@ export class QuizIntentHandler extends BaseIntentHandler {
 
     const region = countries.getRegionByCode(regionValue, locale);
     if (region) {
-      const numCountries = countries.getAll(locale).filter((item) => item.region === region.code);
+      const numCountries = countries.getAll(locale).filter((item) => item.continent.code === region.code);
       if (numCountries.length >= getNumberOfQuestions()) {
         return region;
       }

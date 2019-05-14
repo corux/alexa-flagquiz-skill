@@ -1,6 +1,6 @@
-import { IRegion } from "@corux/country-data";
+import { IContinent } from "@corux/country-data";
 import { HandlerInput } from "ask-sdk-core";
-import { interfaces, Response } from "ask-sdk-model";
+import { Response } from "ask-sdk-model";
 import { IPersistentAttributes, ISessionAttributes } from "./attributes";
 import countries from "./countries";
 import { getLocale } from "./request";
@@ -14,11 +14,11 @@ export function getNumberOfChoices(): number {
   return 3;
 }
 
-function createQuestions(handlerInput: HandlerInput, region?: IRegion) {
+function createQuestions(handlerInput: HandlerInput, region?: IContinent) {
   const locale = getLocale(handlerInput);
   let all = countries.getAll(locale).filter((item) => item.flag && item.flag.smallImageUrl && item.flag.largeImageUrl);
   if (region) {
-    all = all.filter((item) => item.region === region.code);
+    all = all.filter((item) => item.continent.code === region.code);
   }
 
   all.sort(() => Math.random() - 0.5);
@@ -95,7 +95,7 @@ export function getQuestion(handlerInput: HandlerInput,
   return response.getResponse();
 }
 
-export function startQuiz(handlerInput: HandlerInput, region?: IRegion): Response {
+export function startQuiz(handlerInput: HandlerInput, region?: IContinent): Response {
   const attributes = handlerInput.attributesManager.getSessionAttributes() as ISessionAttributes;
 
   attributes.state = States.QuizInProgress;

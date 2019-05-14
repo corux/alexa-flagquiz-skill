@@ -107,6 +107,12 @@
               }
             },
             {
+              "id": "AN",
+              "name": {
+                "value": "Antarktika"
+              }
+            },
+            {
               "id": "AS",
               "name": {
                 "value": "Asien"
@@ -372,8 +378,8 @@
                 "value": "Bosnien und Herzegowina",
                 "synonyms": [
                   "bosnische",
-                  "herzegowinische",
-                  "bosnisch-herzegowinische"
+                  "bosnisch-herzegowinische",
+                  "herzegowinische"
                 ]
               }
             },
@@ -383,8 +389,8 @@
                 "value": "Botswana",
                 "synonyms": [
                   "Republik Botsuana",
-                  "botswanische",
-                  "botsuanische"
+                  "botsuanische",
+                  "botswanische"
                 ]
               }
             },
@@ -883,8 +889,9 @@
                 "value": "Kap Verde",
                 "synonyms": [
                   "Republik Cabo Verde",
-                  "kapverdische",
-                  "kap-verdische"
+                  "caboverdische",
+                  "kap-verdische",
+                  "kapverdische"
                 ]
               }
             },
@@ -983,7 +990,8 @@
                 "value": "Nordkorea",
                 "synonyms": [
                   "Demokratische Volksrepublik Korea",
-                  "koreanische"
+                  "koreanische",
+                  "nordkoreanische"
                 ]
               }
             },
@@ -993,7 +1001,8 @@
                 "value": "Südkorea",
                 "synonyms": [
                   "Republik Korea",
-                  "koreanische"
+                  "koreanische",
+                  "südkoreanische"
                 ]
               }
             },
@@ -1227,16 +1236,6 @@
               }
             },
             {
-              "id": "MKD",
-              "name": {
-                "value": "Mazedonien",
-                "synonyms": [
-                  "Ehemalige jugoslawische Republik Mazedonien",
-                  "mazedonische"
-                ]
-              }
-            },
-            {
               "id": "MEX",
               "name": {
                 "value": "Mexiko",
@@ -1312,9 +1311,9 @@
                 "synonyms": [
                   "Republik der Union Myanmar",
                   "Burma",
-                  "myanmarische",
                   "birmanische",
-                  "burmesische"
+                  "burmesische",
+                  "myanmarische"
                 ]
               }
             },
@@ -1374,6 +1373,7 @@
                 "synonyms": [
                   "Königreich der Niederlande",
                   "Holland",
+                  "holländische",
                   "niederländische"
                 ]
               }
@@ -1404,6 +1404,17 @@
                 "value": "Niue",
                 "synonyms": [
                   "niueanische"
+                ]
+              }
+            },
+            {
+              "id": "MKD",
+              "name": {
+                "value": "Nordmazedonien",
+                "synonyms": [
+                  "Republik Nordmazedonien",
+                  "Mazedonien",
+                  "mazedonische"
                 ]
               }
             },
@@ -1445,7 +1456,8 @@
                   "Demokratische Republik Timor-Leste",
                   "Timor-Leste",
                   "osttimoresische",
-                  "osttimorische"
+                  "osttimorische",
+                  "timorische"
                 ]
               }
             },
@@ -1462,7 +1474,10 @@
             {
               "id": "PSE",
               "name": {
-                "value": "Palästina"
+                "value": "Palästina",
+                "synonyms": [
+                  "Staat Palästina"
+                ]
               }
             },
             {
@@ -1649,7 +1664,7 @@
                 "value": "Schweiz",
                 "synonyms": [
                   "Schweizerische Eidgenossenschaft",
-                  "Schweizere",
+                  "schweizere",
                   "schweizerische"
                 ]
               }
@@ -1807,6 +1822,7 @@
                 "value": "Sudan",
                 "synonyms": [
                   "Republik Sudan",
+                  "Nordsudan",
                   "sudanesische"
                 ]
               }
@@ -1843,7 +1859,8 @@
                 "value": "Swasiland",
                 "synonyms": [
                   "Königreich Eswatini",
-                  "swasiländische"
+                  "swasiländische",
+                  "swatinische"
                 ]
               }
             },
@@ -1932,6 +1949,7 @@
                 "value": "Tschechien",
                 "synonyms": [
                   "Tschechische Republik",
+                  "Tschechei",
                   "tschechische"
                 ]
               }
@@ -2079,8 +2097,9 @@
                   "Vereinigtes Königreich Großbritannien und Nordirland",
                   "England",
                   "Großbritannien",
+                  "britische",
                   "englische",
-                  "britische"
+                  "großbritannische"
                 ]
               }
             },
